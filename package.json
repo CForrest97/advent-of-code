@@ -15,6 +15,7 @@
   "devDependencies": {
     "@types/jest": "^29.2.3",
     "@types/node": "^18.11.10",
+    "@types/ramda": "^0.28.20",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "@typescript-eslint/parser": "^5.45.0",
     "dotenv": "^16.0.3",
@@ -35,5 +36,9 @@
       "pre-commit": "yarn test:full",
       "pre-push": "yarn test:full"
     }
+  },
+  "dependencies": {
+    "@datastructures-js/priority-queue": "^6.1.4",
+    "ramda": "^0.28.0"
   }
 }
