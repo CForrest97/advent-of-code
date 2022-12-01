@@ -1,6 +1,6 @@
 import { map } from "ramda";
 
-export const splitLines = (s: string): string[] => s.split("\n");
+export const parseLines = (s: string): string[] => s.split("\n");
 
 export const parseNumber = (s: string): number => parseInt(s, 10);
 
