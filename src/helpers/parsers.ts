@@ -1,7 +1,10 @@
-import { map } from "ramda";
+import { compose, map } from "ramda";
 
-export const parseLines = (s: string): string[] => s.split("\n");
+const parseLines = (s: string): string[] => s.split("\n");
 
-export const parseNumber = (s: string): number => parseInt(s, 10);
+const parseNumber = (s: string): number => parseInt(s, 10);
 
-export const parseNumbers: (lines: string[]) => number[] = map(parseNumber);
+export const parseNumbers: (s: string) => number[] = compose(
+  map(parseNumber),
+  parseLines
+);
