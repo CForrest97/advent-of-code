@@ -1,7 +1,5 @@
-import { compose, intersection, map, splitAt, splitEvery, sum } from "ramda";
+import { compose, intersection, map, split, splitAt, splitEvery, sum } from "ramda";
 import { parseLines } from "../../helpers/parsers";
-
-const toCharArray = (s: string) => s.split("");
 
 const toCompartments = (rucksack: string[]): string[][] =>
   splitAt(rucksack.length / 2, rucksack);
@@ -14,13 +12,13 @@ const findFirstIntersection = (lists: string[][]): string =>
 
 export const solvePart1 = compose(
   sum,
-  map(compose(toPriority, findFirstIntersection, toCompartments, toCharArray)),
+  map(compose(toPriority, findFirstIntersection, toCompartments, split(""))),
   parseLines
 );
 export const solvePart2 = compose(
   sum,
   map(compose(toPriority, findFirstIntersection)),
   splitEvery(3),
-  map(toCharArray),
+  map(split("")),
   parseLines
 );
