@@ -1,5 +1,5 @@
 import { MinPriorityQueue } from "@datastructures-js/priority-queue";
-import { add, reduce } from "ramda";
+import { map, sum } from "ramda";
 import { parseNumbers } from "../../helpers/parsers";
 
 const parseInventories = (inventories: string): number[][] =>
@@ -16,10 +16,10 @@ const sumMaxCalories = (
     if (caloriesQueue.size() > numberOfElves) caloriesQueue.pop();
   };
 
-  const calorieTotals = inventories.map(reduce(add, 0));
+  const calorieTotals = map(sum, inventories);
   calorieTotals.forEach(pushToQueue);
 
-  return caloriesQueue.toArray().reduce(add);
+  return sum(caloriesQueue.toArray());
 };
 
 export const solvePart1 = (input: string) =>

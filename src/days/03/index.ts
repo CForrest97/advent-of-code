@@ -1,33 +1,32 @@
-import { add, compose, intersection, splitEvery } from "ramda";
+import { compose, intersection, map, splitEvery, sum } from "ramda";
 import { parseLines } from "../../helpers/parsers";
 
-type Rucksack = [string[], string[]];
-type Group = [string[], string[], string[]];
+const toCharArray = (s: string) => s.split("");
 
-const parseRucksacks = (rucksacks: string): Rucksack[] =>
-  parseLines(rucksacks).map((rucksack) => [
-    rucksack.slice(0, rucksack.length / 2).split(""),
-    rucksack.slice(rucksack.length / 2).split(""),
-  ]);
-
-const parseGroups = (input: string): Group[] =>
-  splitEvery(
-    3,
-    parseLines(input).map((s) => s.split(""))
-  ) as Group[];
+const parseRucksack = (rucksack: string[]): string[][] => [
+  rucksack.slice(0, rucksack.length / 2),
+  rucksack.slice(rucksack.length / 2),
+];
 
 const toPriority = (char: string): number => {
   const charCode = char.charCodeAt(0);
-  if (char.toLowerCase() === char) return charCode - 96;
-  return charCode - 64 + 26;
+  return char.toLowerCase() === char ? charCode - 96 : charCode - 64 + 26;
 };
 
 const findIntersection = (lists: string[][]): number =>
   toPriority(lists.reduce(intersection)[0]);
 
-const sumErrors = (rucksacks: Rucksack[]) =>
-  rucksacks.map(findIntersection).reduce(add);
-const sumBadges = (groups: Group[]) => groups.map(findIntersection).reduce(add);
-
-export const solvePart1 = compose(sumErrors, parseRucksacks);
-export const solvePart2 = compose(sumBadges, parseGroups);
+export const solvePart1 = compose(
+  sum,
+  map(findIntersection),
+  map(parseRucksack),
+  map(toCharArray),
+  parseLines
+);
+export const solvePart2 = compose(
+  sum,
+  map(findIntersection),
+  splitEvery(3),
+  map(toCharArray),
+  parseLines
+);

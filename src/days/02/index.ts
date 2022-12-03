@@ -1,4 +1,4 @@
-import { add } from "ramda";
+import { compose, map, sum } from "ramda";
 import { parseLines } from "../../helpers/parsers";
 
 type Game = `${"A" | "B" | "C"} ${"X" | "Y" | "Z"}`;
@@ -33,12 +33,13 @@ const strategy2: Record<Game, number> = {
   "C Z": ROCK + WIN,
 };
 
-export const solvePart1 = (input: string) =>
-  parseLines(input)
-    .map((game) => strategy1[game as Game])
-    .reduce(add);
-
-export const solvePart2 = (input: string) =>
-  parseLines(input)
-    .map((game) => strategy2[game as Game])
-    .reduce(add);
+export const solvePart1 = compose(
+  sum,
+  map((game) => strategy1[game as Game]),
+  parseLines
+);
+export const solvePart2 = compose(
+  sum,
+  map((game) => strategy2[game as Game]),
+  parseLines
+);
