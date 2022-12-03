@@ -1,9 +1,8 @@
 import { MinPriorityQueue } from "@datastructures-js/priority-queue";
-import { map, sum } from "ramda";
+import { compose, map, split, sum } from "ramda";
 import { parseNumbers } from "../../helpers/parsers";
 
-const parseInventories = (inventories: string): number[][] =>
-  inventories.split("\n\n").map(parseNumbers);
+const parseInventories = compose(map(parseNumbers), split("\n\n"));
 
 const sumMaxCalories = (
   inventories: number[][],
