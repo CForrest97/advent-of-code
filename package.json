@@ -1,5 +1,5 @@
 {
-  "name": "ts-template",
+  "name": "advent-of-code-2022",
   "version": "1.0.0",
   "scripts": {
     "format": "prettier --write .",
@@ -8,9 +8,9 @@
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watchAll",
     "test:full": "yarn lint && yarn test:coverage",
-    "lintCheck": "eslint \"./{src,tests}/*\"",
-    "prettierCheck": "prettier --check .",
-    "typeCheck": "tsc --noEmit",
+    "lint:check": "eslint \"./{src,tests}/*\"",
+    "prettier:check": "prettier --check .",
+    "type:check": "tsc --noEmit",
     "prepare": "husky install"
   },
   "license": "MIT",

@@ -12,6 +12,6 @@ jobs:
           node-version: "14"
           cache: "yarn"
       - run: yarn install
-      - run: yarn typeCheck
-      - run: yarn lintCheck
-      - run: yarn prettierCheck
+      - run: yarn type:check
+      - run: yarn lint:check
+      - run: yarn prettier:check
