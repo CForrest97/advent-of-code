@@ -22,15 +22,12 @@ const toPriority = (char: string): number => {
   return charCode - 64 + 26;
 };
 
-const findError = (rucksack: Rucksack): number =>
-  toPriority(intersection(rucksack[0], rucksack[1])[0]);
-
-const findBadge = (group: Group): number =>
-  toPriority(group.reduce(intersection)[0]);
+const findOverlap = (lists: string[][]): number =>
+  toPriority(lists.reduce(intersection)[0]);
 
 const sumErrors = (rucksacks: Rucksack[]) =>
-  rucksacks.map(findError).reduce(add);
-const sumBadges = (groups: Group[]) => groups.map(findBadge).reduce(add);
+  rucksacks.map(findOverlap).reduce(add);
+const sumBadges = (groups: Group[]) => groups.map(findOverlap).reduce(add);
 
 export const solvePart1 = compose(sumErrors, parseRucksacks);
 export const solvePart2 = compose(sumBadges, parseGroups);
