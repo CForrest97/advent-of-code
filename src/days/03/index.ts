@@ -3,7 +3,7 @@ import { parseLines } from "../../helpers/parsers";
 
 const toCharArray = (s: string) => s.split("");
 
-const toCompartments = (rucksack: string[]): string[][] => [
+const toCompartments = (rucksack: string[]): [string[], string[]] => [
   rucksack.slice(0, rucksack.length / 2),
   rucksack.slice(rucksack.length / 2),
 ];
