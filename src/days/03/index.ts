@@ -3,7 +3,7 @@ import { parseLines } from "../../helpers/parsers";
 
 const toCharArray = (s: string) => s.split("");
 
-const parseRucksack = (rucksack: string[]): string[][] => [
+const toCompartments = (rucksack: string[]): string[][] => [
   rucksack.slice(0, rucksack.length / 2),
   rucksack.slice(rucksack.length / 2),
 ];
@@ -18,7 +18,7 @@ const findFirstIntersection = (lists: string[][]): string =>
 
 export const solvePart1 = compose(
   sum,
-  map(compose(toPriority, findFirstIntersection, parseRucksack, toCharArray)),
+  map(compose(toPriority, findFirstIntersection, toCompartments, toCharArray)),
   parseLines
 );
 export const solvePart2 = compose(
