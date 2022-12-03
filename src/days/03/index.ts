@@ -12,7 +12,7 @@ const findFirstIntersection = (lists: string[][]): string =>
 
 export const solvePart1 = compose(
   sum,
-  map(compose(toPriority, findFirstIntersection, toCompartments, toCharArray)),
+  map(compose(toPriority, findFirstIntersection, toCompartments, split(""))),
   parseLines
 );
 export const solvePart2 = compose(
