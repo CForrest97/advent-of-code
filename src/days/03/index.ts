@@ -1,4 +1,4 @@
-import { add, intersection, splitEvery } from "ramda";
+import { add, compose, intersection, splitEvery } from "ramda";
 import { parseLines } from "../../helpers/parsers";
 
 type Rucksack = [string[], string[]];
@@ -32,5 +32,5 @@ const sumErrors = (rucksacks: Rucksack[]) =>
   rucksacks.map(findError).reduce(add);
 const sumBadges = (groups: Group[]) => groups.map(findBadge).reduce(add);
 
-export const solvePart1 = (input: string) => sumErrors(parseRucksacks(input));
-export const solvePart2 = (input: string) => sumBadges(parseGroups(input));
+export const solvePart1 = compose(sumErrors, parseRucksacks);
+export const solvePart2 = compose(sumBadges, parseGroups);
