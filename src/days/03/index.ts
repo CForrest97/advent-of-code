@@ -8,10 +8,8 @@ const toCompartments = (rucksack: string[]): string[][] => [
   rucksack.slice(rucksack.length / 2),
 ];
 
-const toPriority = (char: string): number => {
-  const charCode = char.charCodeAt(0);
-  return char.toLowerCase() === char ? charCode - 96 : charCode - 64 + 26;
-};
+const toPriority = (char: string): number =>
+  char.charCodeAt(0) - (char.toLowerCase() === char ? 96 : 38);
 
 const findFirstIntersection = (lists: string[][]): string =>
   lists.reduce(intersection)[0];
