@@ -13,19 +13,17 @@ const toPriority = (char: string): number => {
   return char.toLowerCase() === char ? charCode - 96 : charCode - 64 + 26;
 };
 
-const findIntersection = (lists: string[][]): number =>
-  toPriority(lists.reduce(intersection)[0]);
+const findIntersection = (lists: string[][]): string =>
+  lists.reduce(intersection)[0];
 
 export const solvePart1 = compose(
   sum,
-  map(findIntersection),
-  map(parseRucksack),
-  map(toCharArray),
+  map(compose(toPriority, findIntersection, parseRucksack, toCharArray)),
   parseLines
 );
 export const solvePart2 = compose(
   sum,
-  map(findIntersection),
+  map(compose(toPriority, findIntersection)),
   splitEvery(3),
   map(toCharArray),
   parseLines
