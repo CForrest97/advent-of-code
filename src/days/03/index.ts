@@ -1,12 +1,10 @@
-import { compose, intersection, map, splitEvery, sum } from "ramda";
+import { compose, intersection, map, splitAt, splitEvery, sum } from "ramda";
 import { parseLines } from "../../helpers/parsers";
 
 const toCharArray = (s: string) => s.split("");
 
-const toCompartments = (rucksack: string[]): [string[], string[]] => [
-  rucksack.slice(0, rucksack.length / 2),
-  rucksack.slice(rucksack.length / 2),
-];
+const toCompartments = (rucksack: string[]): string[][] =>
+  splitAt(rucksack.length / 2, rucksack);
 
 const toPriority = (char: string): number =>
   char.charCodeAt(0) - (char.toLowerCase() === char ? 96 : 38);
