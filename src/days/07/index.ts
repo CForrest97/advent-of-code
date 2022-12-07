@@ -75,7 +75,7 @@ const handleListDirectory = (
   return currentDirectory;
 };
 
-const getRootDocument = (input: string): Directory => {
+const getRootDirectory = (input: string): Directory => {
   const root: Directory = makeDirectory("/", null);
   let currentDirectory: Directory = root;
 
@@ -124,5 +124,5 @@ const solve2 = (root: Directory): number => {
   );
 };
 
-export const solvePart1 = (input: string) => solve1(getRootDocument(input));
-export const solvePart2 = (input: string) => solve2(getRootDocument(input));
+export const solvePart1 = (input: string) => solve1(getRootDirectory(input));
+export const solvePart2 = (input: string) => solve2(getRootDirectory(input));
