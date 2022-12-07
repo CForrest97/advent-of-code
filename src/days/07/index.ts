@@ -25,6 +25,56 @@ const makeDirectory = (
   parent,
 });
 
+const handleChangeDirectoryToParent = (currentDirectory: Directory) =>
+  currentDirectory.parent!;
+
+const handleChangeDirectory = (
+  currentDirectory: Directory,
+  command: string[]
+) => {
+  const name = command[0].slice(3);
+  return currentDirectory.directories.get(name)!;
+};
+
+const updateParentDirectoriesWithFile = (
+  directory: Directory,
+  size: number
+) => {
+  let currentDirectory: Directory | null = directory;
+
+  while (currentDirectory !== null) {
+    currentDirectory.size += size;
+    currentDirectory = currentDirectory.parent;
+  }
+};
+
+const handleListDirectory = (
+  currentDirectory: Directory,
+  command: string[]
+) => {
+  for (let j = 1; j < command.length; j += 1) {
+    const item = command[j];
+    if (item.startsWith("dir ")) {
+      const name = item.slice(4);
+      const newDir = makeDirectory(name, currentDirectory);
+
+      if (!currentDirectory.directories.has(name)) {
+        currentDirectory.directories.set(name, newDir);
+      }
+    } else {
+      const [sizeString, name] = item.split(" ");
+      const size = parseNumber(sizeString);
+
+      if (!currentDirectory.files.has(name)) {
+        currentDirectory.files.set(name, { name, size });
+        updateParentDirectoriesWithFile(currentDirectory, size);
+      }
+    }
+  }
+
+  return currentDirectory;
+};
+
 const getRootDocument = (input: string): Directory => {
   const root: Directory = makeDirectory("/", null);
   let currentDirectory: Directory = root;
@@ -33,34 +83,11 @@ const getRootDocument = (input: string): Directory => {
   for (let i = 1; i < commands.length; i += 1) {
     const command = commands[i];
     if (command[0] === "ls") {
-      for (let j = 1; j < command.length; j += 1) {
-        const s = command[j];
-        if (s.startsWith("dir ")) {
-          const name = s.slice(4);
-          const newDir = makeDirectory(name, currentDirectory);
-          if (currentDirectory.directories.get(name) === undefined) {
-            currentDirectory.directories.set(name, newDir);
-          }
-        } else {
-          const [size, name] = s.split(" ");
-
-          if (!currentDirectory.files.has(name)) {
-            currentDirectory.files.set(name, { name, size: parseNumber(size) });
-
-            let dir: Directory | null = currentDirectory;
-
-            while (dir !== null) {
-              dir.size += parseNumber(size);
-              dir = dir.parent;
-            }
-          }
-        }
-      }
+      currentDirectory = handleListDirectory(currentDirectory, command);
     } else if (command[0] === "cd ..") {
-      currentDirectory = currentDirectory.parent!;
+      currentDirectory = handleChangeDirectoryToParent(currentDirectory);
     } else if (command[0].startsWith("cd ")) {
-      const name = command[0].slice(3);
-      currentDirectory = currentDirectory.directories.get(name)!;
+      currentDirectory = handleChangeDirectory(currentDirectory, command);
     }
   }
 
