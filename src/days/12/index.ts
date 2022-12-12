@@ -19,12 +19,8 @@ const moves: Position[] = [
   { x: 0, y: -1 },
 ];
 
-const isValidPosition = (
-  from: Position,
-  to: Position,
-  height: number,
-  width: number
-) => to.x >= 0 && to.x < width && to.y >= 0 && to.y < height;
+const isValidPosition = ({ x, y }: Position, height: number, width: number) =>
+  x >= 0 && x < width && y >= 0 && y < height;
 
 const toHeight = (char: string) => char.charCodeAt(0) - "a".charCodeAt(0);
 
@@ -77,7 +73,7 @@ const bfs = ({ map, start, end }: ParsedInput): number => {
         .map((move) => ({ x: from.x + move.x, y: from.y + move.y }))
         .filter(
           (to) =>
-            isValidPosition(from, to, map.length, map[0].length) &&
+            isValidPosition(to, map.length, map[0].length) &&
             map[to.y][to.x] <= map[from.y][from.x] + 1 &&
             !visited[to.y][to.x]
         )
