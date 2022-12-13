@@ -1,5 +1,5 @@
 import assert from "assert";
-import { range, times } from "ramda";
+import { compose, head, join, map, times } from "ramda";
 import { parseLines, parseNumber } from "../../helpers/parsers";
 
 type Instruction = {
@@ -19,9 +19,9 @@ const parseStacks = (input: string): string[][] => {
   const stacks: string[][] = times(() => [], numberOfStacks);
 
   lines.forEach((line) => {
-    range(0, numberOfStacks).forEach((stack) => {
-      const char = line.charAt(4 * stack + 1);
-      if (char !== " ") stacks[stack].push(char);
+    stacks.forEach((stack, index) => {
+      const char = line.charAt(4 * index + 1);
+      if (char !== " ") stack.push(char);
     });
   });
 
@@ -49,22 +49,16 @@ const rearrangeCrates = (
 ): string => {
   instructions.forEach(({ count, from, to }) => {
     const moving = [];
-    for (let i = 0; i < count; i += 1) {
-      const crate = stacks[from].shift()!;
+    for (let i = 0; i < count; i += 1) moving.push(stacks[from].shift()!);
 
-      if (is9001) {
-        moving.unshift(crate);
-      } else {
-        moving.push(crate);
-      }
-    }
+    if (is9001) moving.reverse();
 
-    moving.forEach((char: string) => {
+    moving.forEach((char) => {
       stacks[to].unshift(char);
     });
   });
 
-  return stacks.map((stack) => stack[0]).join("");
+  return compose(join(""), map(head))(stacks);
 };
 
 export const solvePart1 = (input: string) => {
