@@ -1,10 +1,6 @@
 import { repeat, times } from "ramda";
 import { parseLines } from "../../helpers/parsers";
-
-type Position = {
-  x: number;
-  y: number;
-};
+import { Position } from "../../helpers/Position";
 
 type ParsedInput = {
   start: Position;
