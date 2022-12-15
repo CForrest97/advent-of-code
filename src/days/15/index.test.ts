@@ -6,7 +6,7 @@ describe("Day 15", () => {
     ["simpleInput", 10, 26, 56000011],
     ["puzzleInput", 2000000, 4879972, 12525726647448],
   ])("%s", (filename, targetY, expectedPart1, expectedPart2) => {
-    it.skip("should solve part 1", async () => {
+    it("should solve part 1", async () => {
       const input = await readInput(__dirname, filename);
 
       expect(solvePart1(input, targetY)).toBe(expectedPart1);

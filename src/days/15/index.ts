@@ -31,11 +31,17 @@ const countNonBeaconPositions = (sensors: Sensor[], y: number): number => {
         matchingSensor.position.x +
         matchingSensor.distanceToBeacon -
         Math.abs(y - matchingSensor.position.y);
-      total += x - circleEdgeXPosition;
+
+      total += circleEdgeXPosition - x + 1;
+      x = circleEdgeXPosition;
     }
   }
 
-  return total;
+  const beacons = sensors
+    .filter(({ beaconPosition }) => beaconPosition.y === y)
+    .map(({ beaconPosition }) => beaconPosition.y);
+
+  return total - new Set(beacons).size;
 };
 
 const findMissingBeacon = (sensors: Sensor[], gridSize: number): number => {
