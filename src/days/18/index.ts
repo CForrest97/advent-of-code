@@ -7,7 +7,7 @@ type Position3D = {
   z: number;
 };
 
-const buildPositionRepository = () => {
+const buildPosition3DRepository = () => {
   const store = new Set<string>();
 
   const positionToString = ({ x, y, z }: Position3D) => `${x},${y},${z}`;
@@ -38,25 +38,24 @@ const getNeighbours = ({ x, y, z }: Position3D): Position3D[] => [
 ];
 
 const getTotalSurfaceArea = (lavaCubes: Position3D[]): number => {
-  const lavaRepository = buildPositionRepository();
+  const lavaRepository = buildPosition3DRepository();
 
   let totalSurfaceArea = 0;
 
   lavaCubes.forEach((cube) => {
     lavaRepository.add(cube);
     totalSurfaceArea += 6;
-    const neighbours = getNeighbours(cube).filter((neighbour) =>
-      lavaRepository.has(neighbour)
-    );
 
-    totalSurfaceArea -= 2 * neighbours.length;
+    const lavaNeighbours = getNeighbours(cube).filter(lavaRepository.has);
+
+    totalSurfaceArea -= 2 * lavaNeighbours.length;
   });
 
   return totalSurfaceArea;
 };
 
 const getExternalSurfaceArea = (lavaCubes: Position3D[]): number => {
-  const lavaRepository = buildPositionRepository();
+  const lavaRepository = buildPosition3DRepository();
 
   lavaCubes.forEach(lavaRepository.add);
 
@@ -69,8 +68,8 @@ const getExternalSurfaceArea = (lavaCubes: Position3D[]): number => {
 
   const queue: Position3D[] = [{ x: minX, y: minY, z: minZ }];
 
-  const visited = buildPositionRepository();
-  let totalSurfaceArea = 0;
+  const visited = buildPosition3DRepository();
+  let externalSurfaceArea = 0;
 
   while (queue.length > 0) {
     const cube = queue.shift()!;
@@ -88,14 +87,15 @@ const getExternalSurfaceArea = (lavaCubes: Position3D[]): number => {
 
       const lavaNeighbours = neighbours.filter(lavaRepository.has);
       const airNeighbours = neighbours.filter((c) => !lavaRepository.has(c));
-      totalSurfaceArea += lavaNeighbours.length;
+
+      externalSurfaceArea += lavaNeighbours.length;
       airNeighbours.forEach((air) => queue.push(air));
 
       visited.add(cube);
     }
   }
 
-  return totalSurfaceArea;
+  return externalSurfaceArea;
 };
 
 export const solvePart1 = compose(
