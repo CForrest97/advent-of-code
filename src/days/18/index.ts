@@ -74,7 +74,7 @@ const getExternalSurfaceArea = (lavaCubes: Position3D[]): number => {
   while (queue.length > 0) {
     const cube = queue.shift()!;
 
-    if (visited.has(cube) || lavaRepository.has(cube)) {
+    if (!visited.has(cube) && !lavaRepository.has(cube)) {
       const neighbours = getNeighbours(cube).filter(
         ({ x, y, z }) =>
           x >= minX &&
