@@ -89,7 +89,7 @@ const getExternalSurfaceArea = (lavaCubes: Position3D[]): number => {
       const airNeighbours = neighbours.filter((c) => !lavaRepository.has(c));
 
       externalSurfaceArea += lavaNeighbours.length;
-      airNeighbours.forEach((air) => queue.push(air));
+      queue.push(...airNeighbours);
 
       visited.add(cube);
     }
