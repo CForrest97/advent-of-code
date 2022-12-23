@@ -1,16 +1,11 @@
 /* eslint-disable no-param-reassign */
-import { compose, map, multiply } from "ramda";
+import { compose, map, mathMod, multiply } from "ramda";
 import { parseNumbers } from "../../helpers/parsers";
 
 type DoubleLinkedNode = {
   prev: DoubleLinkedNode;
   next: DoubleLinkedNode;
   value: number;
-};
-
-const mod = (n: number, base: number) => {
-  if (n >= 0) return n % base;
-  return (n % base) + base;
 };
 
 const parseNodes = (numbers: number[]): DoubleLinkedNode[] => {
@@ -31,7 +26,7 @@ const parseNodes = (numbers: number[]): DoubleLinkedNode[] => {
 const mixSequence = (mixes: number) => (list: DoubleLinkedNode[]) => {
   for (let mix = 0; mix < mixes; mix += 1) {
     list.forEach((node) => {
-      const amountToShift = mod(node.value, list.length - 1);
+      const amountToShift = mathMod(node.value, list.length - 1);
 
       if (amountToShift !== 0) {
         node.next.prev = node.prev;
