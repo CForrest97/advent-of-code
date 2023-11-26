@@ -210,7 +210,7 @@ const solvePart1 = (input: string) => solve(parseInput(input), true);
 const solvePart2 = (input: string) => solve(parseInput(input), false);
 
 export const reservoirResearch: Day = {
-  day: 18,
+  day: 17,
   year: 2018,
   getSimpleInput: () => readInput(__dirname, "simpleInput"),
   getPuzzleInput: () => readInput(__dirname, "puzzleInput"),
