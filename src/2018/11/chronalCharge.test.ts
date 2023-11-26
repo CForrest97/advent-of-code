@@ -1,4 +1,4 @@
-import { chronalCharge } from "./index";
+import { chronalCharge } from "./chronalCharge";
 
 describe("2023/11", () => {
   describe("part 1", () => {
