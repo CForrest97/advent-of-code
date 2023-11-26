@@ -6,7 +6,7 @@ import { Day } from "../../helpers/types";
 
 type Tile = "wall" | "rest" | "flowing";
 
-type ResevoirRepository = {
+type ReservoirRepository = {
   get: (position: Position) => Tile | null;
   set: (position: Position, tile: Tile) => void;
   getWater: (includeFlowing: boolean) => number;
@@ -30,7 +30,7 @@ type VertivalVein = {
 
 type Vein = HorizontalVein | VertivalVein;
 
-const parseInput = (input: string): ResevoirRepository => {
+const parseInput = (input: string): ReservoirRepository => {
   const lines = parseLines(input);
 
   const veins: Vein[] = lines.map((line) => {
@@ -114,7 +114,7 @@ const parseInput = (input: string): ResevoirRepository => {
 };
 
 const isWallToSide = (
-  reservoirRepository: ResevoirRepository,
+  reservoirRepository: ReservoirRepository,
   startingPosition: Position,
   side: -1 | 1,
 ): { is: boolean; x: number; tile: Tile | null } => {
@@ -139,7 +139,7 @@ const isWallToSide = (
 };
 
 const flow = (
-  reservoirRepository: ResevoirRepository,
+  reservoirRepository: ReservoirRepository,
   startingPosition: Position,
 ): Position[] => {
   let currentPosition = { ...startingPosition };
@@ -181,7 +181,7 @@ const flow = (
 };
 
 const solve = (
-  resevoirRepository: ResevoirRepository,
+  resevoirRepository: ReservoirRepository,
   includeFlowing: boolean,
 ): number => {
   const spring: Position = { x: 500, y: 0 };

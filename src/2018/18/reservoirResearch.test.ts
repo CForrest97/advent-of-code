@@ -1,4 +1,4 @@
-import { reservoirResearch } from "./index";
+import { reservoirResearch } from "./reservoirResearch";
 
 describe("2018/18", () => {
   describe("part 1", () => {
