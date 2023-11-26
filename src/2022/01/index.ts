@@ -8,7 +8,7 @@ const sumMaxCalories = (numberOfElves: number) =>
     sortBy(negate),
     map(sum),
     map(parseNumbers),
-    split("\n\n")
+    split("\n\n"),
   );
 
 export const solvePart1 = sumMaxCalories(1);

@@ -1,4 +1,4 @@
-<h1 align="center">Advent of Code [2022] 👋</h1>
+<h1 align="center">Advent of Code 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
   <a href="#" target="_blank">
@@ -6,7 +6,7 @@
   </a>
 </p>
 
-> My hopefully clean-ish complete 2022 solutions to Advent of Code using Typescript with a datastructures library and ramda
+> My hopefully clean-ish complete solutions to Advent of Code using Typescript with ramda
 
 ## What is Advent of Code?
 

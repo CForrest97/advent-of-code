@@ -1,21 +1,39 @@
-import { solvePart1, solvePart2 } from "./index";
-import { InputType, readInput } from "../../helpers/readInput";
+import { day } from "./index";
 
-describe.skip("Day __", () => {
-  describe.each<[InputType, number, number]>([
-    ["simpleInput", 0, 0],
-    // ["puzzleInput", 0, 0]
-  ])("%s", (filename, expectedPart1, expectedPart2) => {
-    it("should solve part 1", async () => {
-      const input = await readInput(__dirname, filename);
+describe("2023/__", () => {
+  describe("part 1", () => {
+    it("should solve the simple input", async () => {
+      const input = await day.getSimpleInput();
 
-      expect(solvePart1(input)).toBe(expectedPart1);
+      const output = day.solvePart1(input);
+
+      expect(output).toBe(-1);
     });
 
-    it("should solve part 2", async () => {
-      const input = await readInput(__dirname, filename);
+    it("should solve the puzzle input", async () => {
+      const input = await day.getPuzzleInput();
 
-      expect(solvePart2(input)).toBe(expectedPart2);
+      const output = day.solvePart1(input);
+
+      expect(output).toBe(-1);
+    });
+  });
+
+  describe("part 2", () => {
+    it("should solve the simple input", async () => {
+      const input = await day.getSimpleInput();
+
+      const output = day.solvePart2(input);
+
+      expect(output).toBe(-1);
+    });
+
+    it("should solve the puzzle input", async () => {
+      const input = await day.getPuzzleInput();
+
+      const output = day.solvePart2(input);
+
+      expect(output).toBe(-1);
     });
   });
 });
