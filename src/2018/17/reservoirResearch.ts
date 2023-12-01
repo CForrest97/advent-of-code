@@ -206,14 +206,20 @@ const solve = (
   return resevoirRepository.getWater(includeFlowing);
 };
 
-const solvePart1 = (input: string) => solve(parseInput(input), true);
-const solvePart2 = (input: string) => solve(parseInput(input), false);
+const solvePartA = (input: string) => solve(parseInput(input), true);
+const solvePartB = (input: string) => solve(parseInput(input), false);
 
 export const reservoirResearch: Day = {
   day: 17,
   year: 2018,
-  getSimpleInput: () => readInput(__dirname, "simpleInput"),
-  getPuzzleInput: () => readInput(__dirname, "puzzleInput"),
-  solvePart1,
-  solvePart2,
+  partA: {
+    getExampleInput: () => readInput(__dirname, "input/example"),
+    getPuzzleInput: () => readInput(__dirname, "input/puzzle"),
+    solve: solvePartA,
+  },
+  partB: {
+    getExampleInput: () => readInput(__dirname, "input/example"),
+    getPuzzleInput: () => readInput(__dirname, "input/puzzle"),
+    solve: solvePartB,
+  },
 };

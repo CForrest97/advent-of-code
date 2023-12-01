@@ -1,6 +1,6 @@
 import { mineCartMadness } from "./mineCartMadness";
 
-describe("2018/13", () => {
+describe(`${mineCartMadness.year}/${mineCartMadness.day}`, () => {
   describe("part A", () => {
     it("should solve the simple input", async () => {
       const input = await mineCartMadness.partA.getExampleInput();

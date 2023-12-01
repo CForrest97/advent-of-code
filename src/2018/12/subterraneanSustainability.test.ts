@@ -1,6 +1,6 @@
 import { subterraneanSustainability } from "./subterraneanSustainability";
 
-describe("2018/12", () => {
+describe(`${subterraneanSustainability.year}/${subterraneanSustainability.day}`, () => {
   describe("part A", () => {
     it("should solve the simple input", async () => {
       const input = await subterraneanSustainability.partA.getExampleInput();
