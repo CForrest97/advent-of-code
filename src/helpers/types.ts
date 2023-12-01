@@ -1,8 +1,12 @@
+type Part<Input = string, Output = number> = {
+  getExampleInput: () => Promise<Input>;
+  getPuzzleInput: () => Promise<Input>;
+  solve: (input: Input) => Output;
+};
+
 export type Day<Input = string, Output = number> = {
   day: number;
   year: number;
-  getSimpleInput: () => Promise<Input>;
-  getPuzzleInput: () => Promise<Input>;
-  solvePart1: (input: Input) => Output;
-  solvePart2: (input: Input) => Output;
+  partA: Part<Input, Output>;
+  partB: Part<Input, Output>;
 };

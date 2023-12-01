@@ -93,16 +93,22 @@ const calculateMaxVariableGrid = (gridSerialNumber: number) => {
   return `${bestPosition.x + 1},${bestPosition.y + 1},${bestSize}`;
 };
 
-const solvePart1 = (gridSerialNumber: number) =>
+const solvePartA = (gridSerialNumber: number) =>
   calculateMaxFixedGrid(gridSerialNumber);
-const solvePart2 = (gridSerialNumber: number) =>
+const solvePartB = (gridSerialNumber: number) =>
   calculateMaxVariableGrid(gridSerialNumber);
 
 export const chronalCharge: Day<number, string> = {
-  day: 13,
+  day: 11,
   year: 2018,
-  getSimpleInput: async () => 42,
-  getPuzzleInput: async () => 1309,
-  solvePart1,
-  solvePart2,
+  partA: {
+    getExampleInput: async () => 42,
+    getPuzzleInput: async () => 1309,
+    solve: solvePartA,
+  },
+  partB: {
+    getExampleInput: async () => 42,
+    getPuzzleInput: async () => 1309,
+    solve: solvePartB,
+  },
 };

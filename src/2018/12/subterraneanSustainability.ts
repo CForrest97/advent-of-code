@@ -1,5 +1,4 @@
 import { add } from "ramda";
-import assert from "assert";
 import { parseLines } from "../../helpers/parsers";
 import { readInput } from "../../helpers/readInput";
 import { Day } from "../../helpers/types";
@@ -106,16 +105,22 @@ const predictPlantsAfterManyGenerations = (
   return after100 + (numberOfGenerations - 100) * (after101 - after100);
 };
 
-const solvePart1 = (input: string) =>
+const solvePartA = (input: string) =>
   getPlantsAfterNGenerations(20, parseInput(input));
-const solvePart2 = (input: string) =>
+const solvePartB = (input: string) =>
   predictPlantsAfterManyGenerations(50_000_000_000, parseInput(input));
 
 export const subterraneanSustainability: Day = {
   day: 12,
   year: 2023,
-  getSimpleInput: () => readInput(__dirname, "simpleInput"),
-  getPuzzleInput: () => readInput(__dirname, "puzzleInput"),
-  solvePart1,
-  solvePart2,
+  partA: {
+    getExampleInput: () => readInput(__dirname, "input/example"),
+    getPuzzleInput: () => readInput(__dirname, "input/puzzle"),
+    solve: solvePartA,
+  },
+  partB: {
+    getExampleInput: () => readInput(__dirname, "input/example"),
+    getPuzzleInput: () => readInput(__dirname, "input/puzzle"),
+    solve: solvePartB,
+  },
 };
