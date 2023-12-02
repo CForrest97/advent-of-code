@@ -112,7 +112,7 @@ const solvePartB = (input: string) =>
 
 export const subterraneanSustainability: Day = {
   day: 12,
-  year: 2023,
+  year: 2018,
   partA: {
     getExampleInput: () => readInput(__dirname, "input/example"),
     getPuzzleInput: () => readInput(__dirname, "input/puzzle"),

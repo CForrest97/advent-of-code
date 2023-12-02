@@ -1,7 +1,7 @@
 import { day } from "./index";
 
-describe(`${day.year}/${day.day}`, () => {
-  describe("part 1", () => {
+describe(`2023/__`, () => {
+  describe("part A", () => {
     it("should solve the example input", async () => {
       const input = await day.partA.getExampleInput();
 
@@ -19,7 +19,7 @@ describe(`${day.year}/${day.day}`, () => {
     });
   });
 
-  describe("part 2", () => {
+  describe("part B", () => {
     it("should solve the example input", async () => {
       const input = await day.partB.getExampleInput();
 
