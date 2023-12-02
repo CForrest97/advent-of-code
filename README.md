@@ -37,6 +37,12 @@
 yarn install
 ```
 
+## Run benchmarks
+
+```sh
+yarn benchmark YEAR DAY
+```
+
 ## Run tests
 
 ```sh
