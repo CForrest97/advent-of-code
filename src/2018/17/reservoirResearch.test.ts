@@ -1,6 +1,6 @@
 import { reservoirResearch } from "./reservoirResearch";
 
-describe(`${reservoirResearch.year}/${reservoirResearch.day}`, () => {
+describe("2018/17", () => {
   describe("part A", () => {
     it("should solve the simple input", async () => {
       const input = await reservoirResearch.partA.getExampleInput();

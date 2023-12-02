@@ -1,6 +1,6 @@
 import { chronalCharge } from "./chronalCharge";
 
-describe(`${chronalCharge.year}/${chronalCharge.day}`, () => {
+describe("2018/11", () => {
   describe("part A", () => {
     it("should solve the simple input", async () => {
       const input = await chronalCharge.partA.getExampleInput();

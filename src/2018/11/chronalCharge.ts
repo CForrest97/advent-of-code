@@ -103,12 +103,12 @@ export const chronalCharge: Day<number, string> = {
   year: 2018,
   partA: {
     getExampleInput: async () => 42,
-    getPuzzleInput: async () => 1309,
+    getPuzzleInput: async () => 1_309,
     solve: solvePartA,
   },
   partB: {
     getExampleInput: async () => 42,
-    getPuzzleInput: async () => 1309,
+    getPuzzleInput: async () => 1_309,
     solve: solvePartB,
   },
 };
