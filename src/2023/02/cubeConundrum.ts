@@ -4,16 +4,8 @@ import { parseLines, parseNumber } from "../../helpers/parsers";
 import { readInput } from "../../helpers/readInput";
 import { Day } from "../../helpers/types";
 
-type Set = {
-  red: number;
-  green: number;
-  blue: number;
-};
-
-type Game = {
-  id: number;
-  sets: Set[];
-};
+type Set = { red: number; green: number; blue: number };
+type Game = { id: number; sets: Set[] };
 
 const parseSet = (setString: string): Set => {
   const redMatch = setString.match(/(\d+) red/);

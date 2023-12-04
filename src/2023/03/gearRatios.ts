@@ -15,11 +15,7 @@ const isNear = ({ x: x1, y: y1 }: Position, { x: x2, y: y2 }: Position) =>
 
 const getSymbols = (engine: Engine) =>
   engine
-    .flat()
-    .map((_, i) => ({
-      x: i % engine.length,
-      y: Math.floor(i / engine.length),
-    }))
+    .flatMap((row, y) => row.map((_, x) => ({ x, y })))
     .filter(({ x, y }) => isSymbol(engine[y][x]));
 
 const getPartNumbers = (engine: Engine) =>
@@ -28,14 +24,14 @@ const getPartNumbers = (engine: Engine) =>
       if (!isDigit(char)) return curr;
       const currentPartNumber = curr.at(-1);
 
-      if (currentPartNumber && currentPartNumber.positions.at(-1)!.x === x - 1)
-        return [
-          ...curr.slice(0, -1),
-          {
-            value: currentPartNumber.value * 10 + parseNumber(char),
-            positions: [...currentPartNumber.positions, { x, y }],
-          },
-        ];
+      if (currentPartNumber?.positions.at(-1)?.x === x - 1) {
+        const updatedPartNumber: PartNumber = {
+          value: currentPartNumber.value * 10 + parseNumber(char),
+          positions: [...currentPartNumber.positions, { x, y }],
+        };
+
+        return [...curr.slice(0, -1), updatedPartNumber];
+      }
 
       return [...curr, { value: parseNumber(char), positions: [{ x, y }] }];
     }, [] as PartNumber[]),
