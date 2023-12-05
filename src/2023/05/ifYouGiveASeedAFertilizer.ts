@@ -3,43 +3,31 @@ import { parseNumber } from "../../helpers/parsers";
 import { readInput } from "../../helpers/readInput";
 import { Day } from "../../helpers/types";
 
-type RangedMap = {
-  from: [number, number];
-  to: [number, number];
-  change: number;
-}[];
+type RangedMap = { from: [number, number]; change: number }[];
 type ParsedInput = { seeds: number[]; rangedMaps: RangedMap[] };
 
 const parseInput = (input: string): ParsedInput => {
-  const [seedsLine, ...rest] = input.split("\n\n");
-  const seeds = seedsLine.slice(7).split(" ").map(parseNumber);
-
-  const rangedMaps: RangedMap[] = rest.map((block) => {
-    const [, ...rangedMapStrings] = block.split("\n");
-    return rangedMapStrings.map((line) => {
-      const [destination, startSource, rangeLength] = line
-        .split(" ")
-        .map(parseNumber);
-
-      return {
-        from: [startSource, startSource + rangeLength - 1],
-        to: [
-          startSource + destination - startSource,
-          startSource + rangeLength - 1 + destination - startSource,
-        ],
-        change: destination - startSource,
-      };
-    });
-  });
-
-  return { seeds, rangedMaps };
+  const [seedsLine, ...maps] = input.split("\n\n");
+  return {
+    seeds: seedsLine.slice(7).split(" ").map(parseNumber),
+    rangedMaps: maps.map((map) =>
+      map
+        .split("\n")
+        .slice(0)
+        .map((line) => line.split(" ").map(parseNumber))
+        .map(([destination, startSource, rangeLength]) => ({
+          from: [startSource, startSource + rangeLength - 1],
+          change: destination - startSource,
+        })),
+    ),
+  };
 };
 
 const mapTo = (value: number, rangedMap: RangedMap): number => {
-  const range2 = rangedMap.find(
+  const range = rangedMap.find(
     ({ from }) => value >= from[0] && value <= from[1],
   );
-  return range2 ? range2.change + value : value;
+  return range ? range.change + value : value;
 };
 
 const solvePartA = (input: string) => {
@@ -47,57 +35,27 @@ const solvePartA = (input: string) => {
   return seeds.map((seed) => rangedMaps.reduce(mapTo, seed)).reduce(min);
 };
 
-const getCandidates = (rangedMap: RangedMap): number[] =>
-  rangedMap.flatMap(({ from, to, change }) => [
-    from[0] - 1 + change,
-    from[0] + change,
-    from[1] - 1 + change,
-    from[1] + change,
-    to[0] - 1 + change,
-    to[0] + change,
-    to[1] - 1 + change,
-    to[1] + change,
-  ]);
-
-const reverseMap = (value: number, rangedMap: RangedMap): number[] => {
-  const fromRange = rangedMap.find(
-    ({ from }) => value >= from[0] && value <= from[1],
+const reverseMapTo = (value: number, rangedMap: RangedMap): number[] =>
+  [value, ...rangedMap.map(({ change }) => value - change)].filter(
+    (fromValue) => mapTo(fromValue, rangedMap) === value,
   );
-  const toRange = rangedMap.find(({ to }) => value >= to[0] && value <= to[1]);
-
-  const arr = [];
-
-  if (!fromRange) arr.push(value);
-  if (toRange) arr.push(value - toRange.change);
-
-  return arr;
-};
 
 const solvePartB = (input: string) => {
   const { seeds, rangedMaps } = parseInput(input);
-
   const seedRanges = splitEvery(2, seeds);
-  const isValidSeed = (seed: number) =>
-    seedRanges.some(([from, size]) => seed >= from && seed < from + size);
+  const isSeed = (value: number) =>
+    seedRanges.some(([from, size]) => value >= from && value < from + size);
 
-  const seedMap: RangedMap = seedRanges.map(([from, size]) => ({
-    from: [from, from + size - 1],
-    to: [from, from + size - 1],
-    change: 0,
-  }));
-
-  const candidateSeeds = [seedMap, ...rangedMaps].reduceRight(
-    (currentCandidates, map) => [
-      ...getCandidates(map),
-      ...new Set([
-        ...currentCandidates.flatMap((seed) => reverseMap(seed, map)),
-      ]),
-    ],
-    [] as number[],
-  );
-
-  return candidateSeeds
-    .filter(isValidSeed)
+  return rangedMaps
+    .reduceRight(
+      (current: number[], rangedMap) => [
+        ...rangedMap.map(({ from }) => from[0]),
+        ...new Set(current.flatMap((seed) => reverseMapTo(seed, rangedMap))),
+      ],
+      [],
+    )
+    .filter(isSeed)
+    .concat(seedRanges.map(([from]) => from))
     .map((seed) => rangedMaps.reduce(mapTo, seed))
     .reduce(min);
 };
