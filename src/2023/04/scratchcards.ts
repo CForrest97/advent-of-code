@@ -1,4 +1,4 @@
-import { add, intersection } from "ramda";
+import { add, intersection, prepend } from "ramda";
 import { parseLines, parseNumber } from "../../helpers/parsers";
 import { readInput } from "../../helpers/readInput";
 import { Day } from "../../helpers/types";
@@ -22,16 +22,14 @@ const solvePartA = (input: string) =>
     .map((wins) => (wins === 0 ? 0 : 2 ** (wins - 1)))
     .reduce(add);
 
-const solvePartB = (input: string) => {
-  const winsCount = parseCards(input).map(countWins);
-  const cardCounts = winsCount.map(() => 1);
-
-  for (let i = 0; i < cardCounts.length; i += 1)
-    for (let j = 0; j < winsCount[i]; j += 1)
-      cardCounts[i + j + 1] += cardCounts[i];
-
-  return cardCounts.reduce(add);
-};
+const solvePartB = (input: string) =>
+  parseCards(input)
+    .map(countWins)
+    .reduceRight(
+      (totals, wins) => prepend(totals.slice(0, wins).reduce(add, 1), totals),
+      [] as number[],
+    )
+    .reduce(add);
 
 export const scratchcards: Day = {
   day: 4,
