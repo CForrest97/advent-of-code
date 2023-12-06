@@ -10,19 +10,16 @@ const days: Day[] = [
   ...Object.values(year2023),
 ] as any;
 
-const benchmarkDay = (day: Day) => {
+const benchmarkDay = async (day: Day) => {
   const scores: string[] = [];
+
+  const inputA = await day.partA.getPuzzleInput();
+  const inputB = await day.partB.getPuzzleInput();
 
   suite(
     `Year ${day.year} Day ${day.day} performance results`,
-    b.add("partA", async () => {
-      const input = await day.partA.getPuzzleInput();
-      return day.partA.solve(input);
-    }),
-    b.add("partB", async () => {
-      const input = await day.partB.getPuzzleInput();
-      return day.partB.solve(input);
-    }),
+    b.add("partA", () => day.partA.solve(inputA)),
+    b.add("partB", () => day.partB.solve(inputB)),
     b.cycle((result) => {
       const meanDuration = (result.details.mean * 1000).toFixed(1);
       console.log(`${result.name}: ${meanDuration}ms`);

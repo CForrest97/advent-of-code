@@ -6,5 +6,5 @@ export const parseNumber = (s: string): number => parseInt(s, 10);
 
 export const parseNumbers: (s: string) => number[] = compose(
   map(parseNumber),
-  parseLines
+  parseLines,
 );
