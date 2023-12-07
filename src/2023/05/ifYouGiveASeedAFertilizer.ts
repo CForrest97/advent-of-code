@@ -49,13 +49,13 @@ const solvePartB = (input: string) => {
   return rangedMaps
     .reduceRight(
       (current: number[], rangedMap) => [
-        ...rangedMap.map(({ from }) => from[0]),
+        ...rangedMap.flatMap(({ from }) => [from[0], from[1] + 1]),
         ...new Set(current.flatMap((seed) => reverseMapTo(seed, rangedMap))),
       ],
       [],
     )
     .filter(isSeed)
-    .concat(seedRanges.map(([from]) => from))
+    .concat(seedRanges[0][0])
     .map((seed) => rangedMaps.reduce(mapTo, seed))
     .reduce(min);
 };
