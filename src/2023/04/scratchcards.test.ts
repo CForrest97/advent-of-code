@@ -1,6 +1,6 @@
 import { scratchcards } from "./scratchcards";
 
-describe(`2023/04`, () => {
+describe("2023/04", () => {
   describe("part A", () => {
     it("should solve the example input", async () => {
       const input = await scratchcards.partA.getExampleInput();

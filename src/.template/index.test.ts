@@ -1,6 +1,6 @@
 import { day } from "./index";
 
-describe(`2023/__`, () => {
+describe("2023/__", () => {
   describe("part A", () => {
     it("should solve the example input", async () => {
       const input = await day.partA.getExampleInput();

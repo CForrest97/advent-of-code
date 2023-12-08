@@ -1,6 +1,6 @@
 import { ifYouGiveASeedAFertilizer } from "./ifYouGiveASeedAFertilizer";
 
-describe(`2023/05`, () => {
+describe("2023/05", () => {
   describe("part A", () => {
     it("should solve the example input", async () => {
       const input = await ifYouGiveASeedAFertilizer.partA.getExampleInput();

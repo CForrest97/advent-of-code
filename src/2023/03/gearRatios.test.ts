@@ -1,6 +1,6 @@
 import { gearRatios } from "./gearRatios";
 
-describe(`2023/03`, () => {
+describe("2023/03", () => {
   describe("part A", () => {
     it("should solve the example input", async () => {
       const input = await gearRatios.partA.getExampleInput();
