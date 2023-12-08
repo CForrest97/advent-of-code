@@ -44,7 +44,7 @@ const countSteps = (
 };
 
 const solvePartA = (input: ParsedInput) =>
-countSteps(input, "AAA", (node) => node === "ZZZ");
+  countSteps(input, "AAA", (node) => node === "ZZZ");
 
 const solvePartB = (input: ParsedInput) =>
   Object.keys(input.graph)
