@@ -6,3 +6,4 @@ export * from "./05/ifYouGiveASeedAFertilizer";
 export * from "./06/waitForIt";
 export * from "./07/camelCards";
 export * from "./08/hauntedWasteland";
+export * from "./09/mirageMaintenance";
