@@ -15,12 +15,7 @@ const getNextValue = (history: number[]): number =>
       );
 
 const getPreviousValue = (history: number[]): number =>
-  history.every((value) => value === 0)
-    ? 0
-    : history.at(0)! -
-      getPreviousValue(
-        history.slice(1).map((value, index) => value - history[index]),
-      );
+  getNextValue(history.toReversed());
 
 const solvePartA = (input: string) =>
   parseInput(input).map(getNextValue).reduce(add);
