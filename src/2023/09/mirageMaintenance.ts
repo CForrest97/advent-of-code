@@ -14,14 +14,14 @@ const getNextValue = (history: number[]): number =>
         history.slice(1).map((value, index) => value - history[index]),
       );
 
-const getPreviousValue = (history: number[]): number =>
-  getNextValue(history.toReversed());
-
 const solvePartA = (input: string) =>
   parseInput(input).map(getNextValue).reduce(add);
 
 const solvePartB = (input: string) =>
-  parseInput(input).map(getPreviousValue).reduce(add);
+  parseInput(input)
+    .map((history) => history.toReversed())
+    .map(getNextValue)
+    .reduce(add);
 
 export const mirageMaintenance: Day = {
   day: 9,
