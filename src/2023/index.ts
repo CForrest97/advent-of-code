@@ -8,3 +8,4 @@ export * from "./07/camelCards";
 export * from "./08/hauntedWasteland";
 export * from "./09/mirageMaintenance";
 export * from "./10/pipeMaze";
+export * from "./11/cosmicExpansion";
