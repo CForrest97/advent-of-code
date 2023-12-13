@@ -10,3 +10,4 @@ export * from "./09/mirageMaintenance";
 export * from "./10/pipeMaze";
 export * from "./11/cosmicExpansion";
 export * from "./12/hotSprings";
+export * from "./13/pointOfIncidence";
