@@ -11,3 +11,6 @@ export * from "./10/pipeMaze";
 export * from "./11/cosmicExpansion";
 export * from "./12/hotSprings";
 export * from "./13/pointOfIncidence";
+export * from "./14/parabolicReflectorDish";
+export * from "./15/lensLibrary";
+export * from "./16/theFloorWillBeLava";
