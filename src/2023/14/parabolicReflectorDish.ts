@@ -19,16 +19,14 @@ const parseInput = (input: string): Platform => {
   return { rounds, grid };
 };
 
-const tiltNorth = (platform: Platform): Platform => {
-  const arr = platform.grid[0].map(() => 0);
+const tiltNorth = (grid: Tile[][], rounds: Position[]): Position[] => {
+  const arr = grid[0].map(() => 0);
 
-  const { rounds } = platform;
-
-  const newRounds = rounds
+  return rounds
     .toSorted((rock1, rock2) => rock1.y - rock2.y)
     .map((rock) => {
       for (let { y } = rock; y >= arr[rock.x]; y -= 1) {
-        if (platform.grid[y][rock.x] === "#") {
+        if (grid[y][rock.x] === "#") {
           arr[rock.x] = y + 2;
           return { x: rock.x, y: y + 1 };
         }
@@ -36,23 +34,16 @@ const tiltNorth = (platform: Platform): Platform => {
       arr[rock.x] += 1;
       return { x: rock.x, y: arr[rock.x] - 1 };
     });
-
-  return {
-    ...platform,
-    rounds: newRounds,
-  };
 };
 
-const tiltWest = (platform: Platform): Platform => {
-  const arr = platform.grid.map(() => 0);
+const tiltWest = (grid: Tile[][], rounds: Position[]): Position[] => {
+  const arr = grid.map(() => 0);
 
-  const { rounds } = platform;
-
-  const newRounds = rounds
+  return rounds
     .toSorted((rock1, rock2) => rock1.x - rock2.x)
     .map((rock) => {
       for (let { x } = rock; x >= arr[rock.y]; x -= 1) {
-        if (platform.grid[rock.y][x] === "#") {
+        if (grid[rock.y][x] === "#") {
           arr[rock.y] = x + 2;
           return { x: x + 1, y: rock.y };
         }
@@ -60,23 +51,16 @@ const tiltWest = (platform: Platform): Platform => {
       arr[rock.y] += 1;
       return { x: arr[rock.y] - 1, y: rock.y };
     });
-
-  return {
-    ...platform,
-    rounds: newRounds,
-  };
 };
 
-const tiltSouth = (platform: Platform): Platform => {
-  const arr = platform.grid[0].map(() => platform.grid.length - 1);
+const tiltSouth = (grid: Tile[][], rounds: Position[]): Position[] => {
+  const arr = grid[0].map(() => grid.length - 1);
 
-  const { rounds } = platform;
-
-  const newRounds = rounds
+  return rounds
     .toSorted((rock1, rock2) => rock2.y - rock1.y)
     .map((rock) => {
       for (let { y } = rock; y <= arr[rock.x]; y += 1) {
-        if (platform.grid[y][rock.x] === "#") {
+        if (grid[y][rock.x] === "#") {
           arr[rock.x] = y - 2;
           return { x: rock.x, y: y - 1 };
         }
@@ -84,23 +68,16 @@ const tiltSouth = (platform: Platform): Platform => {
       arr[rock.x] -= 1;
       return { x: rock.x, y: arr[rock.x] + 1 };
     });
-
-  return {
-    ...platform,
-    rounds: newRounds,
-  };
 };
 
-const tiltEast = (platform: Platform): Platform => {
-  const arr = platform.grid.map(() => platform.grid[0].length - 1);
+const tiltEast = (grid: Tile[][], rounds: Position[]): Position[] => {
+  const arr = grid.map(() => grid[0].length - 1);
 
-  const { rounds } = platform;
-
-  const newRounds = rounds
+  return rounds
     .toSorted((rock1, rock2) => rock2.x - rock1.x)
     .map((rock) => {
       for (let { x } = rock; x <= arr[rock.y]; x += 1) {
-        if (platform.grid[rock.y][x] === "#") {
+        if (grid[rock.y][x] === "#") {
           arr[rock.y] = x - 2;
           return { x: x - 1, y: rock.y };
         }
@@ -108,49 +85,49 @@ const tiltEast = (platform: Platform): Platform => {
       arr[rock.y] -= 1;
       return { x: arr[rock.y] + 1, y: rock.y };
     });
-
-  return {
-    ...platform,
-    rounds: newRounds,
-  };
 };
 
-const hash = (platform: Platform) =>
-  platform.rounds.map((pos) => `${pos.x}_${pos.y}`).join();
+const hash = (rounds: Position[]) =>
+  rounds.map((pos) => `${pos.x}_${pos.y}`).join();
 
 const solvePartA = (input: string) => {
-  const platform = parseInput(input);
-  return tiltNorth(platform)
-    .rounds.map(({ y }) => platform.grid.length - y)
+  const { grid, rounds } = parseInput(input);
+
+  return tiltNorth(grid, rounds)
+    .map(({ y }) => grid.length - y)
     .reduce(add);
 };
 const solvePartB = (input: string) => {
-  let current = parseInput(input);
+  const { grid, rounds } = parseInput(input);
+  let current = rounds;
+
   const platformHistory: Map<string, number> = new Map();
+  let hashed = hash(current);
 
   let i = 0;
 
-  while (!platformHistory.has(hash(current))) {
-    platformHistory.set(hash(current), i);
+  while (!platformHistory.has(hashed)) {
+    platformHistory.set(hashed, i);
 
-    current = tiltNorth(current);
-    current = tiltWest(current);
-    current = tiltSouth(current);
-    current = tiltEast(current);
+    current = tiltNorth(grid, current);
+    current = tiltWest(grid, current);
+    current = tiltSouth(grid, current);
+    current = tiltEast(grid, current);
 
     i += 1;
+    hashed = hash(current);
   }
 
   const cycleLength = i - platformHistory.get(hash(current))!;
 
   for (let _ = 0; _ < (1_000_000_000 - i) % cycleLength; _ += 1) {
-    current = tiltNorth(current);
-    current = tiltWest(current);
-    current = tiltSouth(current);
-    current = tiltEast(current);
+    current = tiltNorth(grid, current);
+    current = tiltWest(grid, current);
+    current = tiltSouth(grid, current);
+    current = tiltEast(grid, current);
   }
 
-  return current.rounds.map(({ y }) => current.grid.length - y).reduce(add);
+  return current.map(({ y }) => grid.length - y).reduce(add);
 };
 
 export const parabolicReflectorDish: Day = {
