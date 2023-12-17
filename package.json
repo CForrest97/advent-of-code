@@ -41,6 +41,7 @@
     }
   },
   "dependencies": {
+    "@datastructures-js/priority-queue": "^6.3.0",
     "benny": "^3.7.1",
     "ramda": "^0.29.1"
   }

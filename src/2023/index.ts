@@ -14,3 +14,4 @@ export * from "./13/pointOfIncidence";
 export * from "./14/parabolicReflectorDish";
 export * from "./15/lensLibrary";
 export * from "./16/theFloorWillBeLava";
+export * from "./17/clumsyCrucible";
