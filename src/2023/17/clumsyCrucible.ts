@@ -35,17 +35,36 @@ type State = {
   heatLoss: number;
 };
 
+type Plane = "horizontal" | "vertical";
+const directionToPlane: Record<Direction, Plane> = {
+  north: "vertical",
+  east: "horizontal",
+  south: "vertical",
+  west: "horizontal",
+};
+
 const findMinimumHeatLoss = (
   heatLosses: number[][],
   minStepCount: number,
   maxStepCount: number,
 ): number => {
-  const cache: Map<string, number> = new Map();
+  const cache: Record<Plane, number[]>[][] = heatLosses.map((row) =>
+    row.map(() => ({
+      horizontal: Array.from({ length: maxStepCount }, () => Infinity),
+      vertical: Array.from({ length: maxStepCount }, () => Infinity),
+    })),
+  );
 
   const queue = new MinPriorityQueue<State>((state) => state.heatLoss);
   queue.enqueue({
     position: { x: 0, y: 0 },
     direction: "east",
+    heatLoss: 0,
+    stepCount: 0,
+  });
+  queue.enqueue({
+    position: { x: 0, y: 0 },
+    direction: "south",
     heatLoss: 0,
     stepCount: 0,
   });
@@ -60,14 +79,11 @@ const findMinimumHeatLoss = (
       stepCount,
     } = queue.dequeue();
 
-    if (y < 0 || y >= heatLosses.length || x < 0 || x >= heatLosses[0].length)
+    if (cache[y][x][directionToPlane[direction]][stepCount] <= heatLoss)
       continue;
+    if (heatLoss >= min) return min;
 
-    const key = `${x}_${y}_${direction}_${stepCount}`;
-    if (cache.has(key) && cache.get(key)! <= heatLoss) continue;
-    if (heatLoss > min) return min;
-
-    cache.set(key, heatLoss);
+    cache[y][x][directionToPlane[direction]][stepCount] = heatLoss;
 
     if (
       y === heatLosses.length - 1 &&
